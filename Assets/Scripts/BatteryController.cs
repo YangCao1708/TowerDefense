@@ -44,16 +44,13 @@ public class BatteryController : MonoBehaviour
         }
     }
 
-    public bool DecreaseBattery(int bat)
+    public void DecreaseBattery(int bat)
     {
-        int newBat = m_battery - bat;
-        if (newBat < 0)
-        {
-            return false;
-        } else
-        {
-            m_battery = newBat;
-            return true;
-        }
+        m_battery = m_battery - bat;
+    }
+
+    public bool EnoughBattery(int cost)
+    {
+        return m_battery - cost >= 0;
     }
 }

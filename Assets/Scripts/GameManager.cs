@@ -18,8 +18,10 @@ public class GameManager : MonoBehaviour {
 
     private Dictionary<int, List<WeaponController>> m_weaponDict;
     private List<WeaponController> m_weaponList;
-    //private List<MonsterController> m_monsterList;
     private List<GameObject> m_monsterPool;
+
+    private bool m_checkWin;
+    private int m_monsterCount;
 
     private void Awake()
     {
@@ -31,8 +33,11 @@ public class GameManager : MonoBehaviour {
     }
 
     void Start () {
+
+        m_checkWin = false;
+        m_monsterCount = 0;
+
         m_weaponDict = new Dictionary<int, List<WeaponController>>();
-        //m_monsterList = new List<MonsterController>();
         m_monsterPool = new List<GameObject>();
         m_monsterPool.Add(FriesPrefab);
         m_monsterPool.Add(PillowPrefab);
@@ -40,12 +45,16 @@ public class GameManager : MonoBehaviour {
         StartCoroutine(TestCreateMonsters());
 	}
 
+    private void Update()
+    {
+        if (m_checkWin && m_monsterCount==0)
+        {
+            TriggerController.Trigger.Won();
+        }
+    }
+
     public void CreateWeapon(GameObject prefab, int rowNum, int colNum)
     {
-        if (rowNum < 0 || colNum < 0)
-        {
-            return;
-        }
 
         if (!m_weaponDict.ContainsKey(rowNum))
         {
@@ -67,7 +76,6 @@ public class GameManager : MonoBehaviour {
             weapon.GetComponent<WeaponController>().SetIndex(rowNum, colNum);
             row[colNum] = weapon.GetComponent<WeaponController>();
             m_weaponDict[rowNum] = row;
-            Debug.Log(weapon.name + " " + rowNum + " " + colNum);
         }
     }
 
@@ -79,6 +87,7 @@ public class GameManager : MonoBehaviour {
         int randIdx = Random.Range(0, m_monsterPool.Count);
         GameObject monster = Instantiate<GameObject>(m_monsterPool[randIdx], MonsterParent);
         monster.transform.localPosition = pos;
+        m_monsterCount++;
     }
 
     IEnumerator TestCreateMonsters()
@@ -108,7 +117,7 @@ public class GameManager : MonoBehaviour {
             time_diff = Time.time - start_time;
         }
 
-        TriggerController.Trigger.Won();
+        m_checkWin = true;
     }
 
 
@@ -122,7 +131,6 @@ public class GameManager : MonoBehaviour {
         {
             if (row[i] != null)
             {
-                Debug.Log(rowIndex + " not null weapon!");
                 row[i].UpdateShootStatus(shouldShoot);
             }
         }
@@ -132,6 +140,11 @@ public class GameManager : MonoBehaviour {
     {
         List<WeaponController> row = m_weaponDict[r];
         row[c] = null;
+    }
+
+    public void RemoveMonster()
+    {
+        m_monsterCount--;
     }
 
 }

@@ -19,7 +19,6 @@ public class MonsterTrigger : MonoBehaviour {
                 GameManager.Instance.UpdateShootingStatus(Index, true);
             }
             m_count++;
-            Debug.Log(Index + " monster enter! count=" + m_count);
         } else if (collision.tag == "Weapon")
         {
             WeaponController weapon = collision.GetComponent<WeaponController>();
@@ -33,7 +32,7 @@ public class MonsterTrigger : MonoBehaviour {
     public void OnMonsterDied()
     {
         m_count--;
-        Debug.Log(Index + "monster died! count=" + m_count);
+        GameManager.Instance.RemoveMonster();
         if (m_count == 0)
         {
             GameManager.Instance.UpdateShootingStatus(Index, false);

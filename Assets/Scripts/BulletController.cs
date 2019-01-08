@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BulletController : ItemController {
 
+    //public GameObject StaplerNail;
+    //public GameObject Ball;
+
 	void Update () {
         this.transform.Translate(Vector3.right * Time.deltaTime * Speed);
 
@@ -20,7 +23,14 @@ public class BulletController : ItemController {
             MonsterController mon = collision.GetComponent<MonsterController>();
             if (mon != null)
             {
-                mon.TakeDamage(this.Damage);
+                if (this.gameObject.name.Contains("StaplerNail") && collision.gameObject.name.Contains("Ball"))
+                {
+                    Debug.Log("Here!");
+                    mon.TakeDamage(this.Damage * 3);
+                } else
+                {
+                    mon.TakeDamage(this.Damage);
+                }
             } else
             {
                 Debug.LogError("Cannot find MonsterController:" + collision.name);
