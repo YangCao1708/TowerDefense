@@ -4,12 +4,21 @@ using UnityEngine;
 
 public class BatteryController : MonoBehaviour
 {
-
+    public static BatteryController Battery;
     public Transform BatteryFilling;
 
     private int m_battery = 3;
 
-    // Start is called before the first frame update
+
+    private void Awake()
+    {
+        if (Battery != null)
+        {
+            Destroy(Battery);
+        }
+        Battery = this;
+    }
+
     void Start()
     {
         m_battery = 3;
@@ -17,7 +26,6 @@ public class BatteryController : MonoBehaviour
         InvokeRepeating("IncreaseBattery", 5.0f, 5.0f);
     }
 
-    // Update is called once per frame
     void Update()
     {
         UpdateBattery();
@@ -36,9 +44,10 @@ public class BatteryController : MonoBehaviour
         }
     }
 
-    private bool DecreaseBattery(int bat)
+    public bool DecreaseBattery(int bat)
     {
         int newBat = m_battery - bat;
+        Debug.Log(newBat);
         if (newBat < 0)
         {
             return false;

@@ -27,6 +27,7 @@ public class MonsterController : ItemController {
         if (CurrentHealth <= 0)
         {
             m_trigger.OnMonsterDied();
+            Debug.Log("HERE");
             m_attackingWeapon.OnMonsterDead();
             Destroy(this.gameObject);
             return;

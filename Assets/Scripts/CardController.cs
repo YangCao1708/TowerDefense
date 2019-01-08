@@ -13,12 +13,14 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IDragHandler, 
     public GameObject WeaponPrefab;
     private RectTransform m_movingTransform;
     private RectTransform m_imgRect;        //得到图片的ugui坐标
+    private int m_cost;
     Vector2 offset = new Vector3();    //用来得到鼠标和图片的差值
 
     // Use this for initialization
     void Start()
     {
         m_imgRect = GetComponent<RectTransform>();
+        m_cost = WeaponPrefab.GetComponent<WeaponController>().Cost;
 
     }
 
@@ -33,8 +35,14 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IDragHandler, 
         //out mouseUguiPos：返回转换后的ugui坐标
         //isRect：方法返回一个bool值，判断鼠标按下的点是否在要转换的物体上
         bool isRect = RectTransformUtility.ScreenPointToLocalPointInRectangle(Canvas, mouseDown, eventData.enterEventCamera, out mouseUguiPos);
-        if (isRect)   //如果在
+        if (isRect)
         {
+            bool success = BatteryController.Battery.DecreaseBattery(m_cost);
+            Debug.Log(success);
+            if (!success)
+            {
+                return;
+            }
             m_movingTransform = Instantiate<GameObject>(ItemPrefab, Canvas.transform).GetComponent<RectTransform>();
             m_movingTransform.anchoredPosition = mouseUguiPos;
             //计算图片中心和鼠标点的差值
@@ -85,31 +93,30 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IDragHandler, 
     }
 
 
-
     private int GetCol(float xCoor)
     {
         if (xCoor < -1.3 && xCoor >= -1.9)
         {
             return 0;
-        } else if (xCoor < -0.6)
+        } else if (xCoor < -0.6 && xCoor >= -1.3)
         {
             return 1;
-        } else if (xCoor < 0)
+        } else if (xCoor < 0 && xCoor >= -0.6)
         {
             return 2;
-        } else if (xCoor < 0.6)
+        } else if (xCoor < 0.6 && xCoor >= 0)
         {
             return 3;
-        } else if (xCoor < 1.3)
+        } else if (xCoor < 1.3 && xCoor >= 0.6)
         {
             return 4;
-        } else if (xCoor < 1.9)
+        } else if (xCoor < 1.9 && xCoor >= 1.3)
         {
             return 5;
-        } else if (xCoor < 2.6)
+        } else if (xCoor < 2.6 && xCoor >= 1.9)
         {
             return 6;
-        } else if (xCoor < 3.2)
+        } else if (xCoor < 3.2 && xCoor >= 2.6)
         {
             return 7;
         }
@@ -121,16 +128,16 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IDragHandler, 
         if (yCoor < -1.1 && yCoor >= -1.8)
         {
             return 4;
-        } else if (yCoor < -0.4)
+        } else if (yCoor < -0.4 && yCoor >= -1.1)
         {
             return 3;
-        } else if (yCoor < 0.4)
+        } else if (yCoor < 0.4 && yCoor >= -0.4)
         {
             return 2;
-        } else if (yCoor < 1.1)
+        } else if (yCoor < 1.1 && yCoor >= 0.4)
         {
             return 1;
-        } else if (yCoor < 1.8)
+        } else if (yCoor < 1.8 && yCoor >= 1.1)
         {
             return 0;
         }

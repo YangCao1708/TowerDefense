@@ -8,6 +8,7 @@ public class ItemController : MonoBehaviour {
     public float Damage;
     public float Speed;
     public float AttackInterval;
+    public int Cost;
 
     protected float CurrentHealth;
     protected HealthbarController HealthBar;

@@ -118,6 +118,7 @@ MonoBehaviour:
   Damage: 0
   Speed: 0
   AttackInterval: 1
+  Cost: 2
   Bullet: {fileID: 3291428202157661307, guid: de26c6022b295744d95264b8f1739ccd, type: 3}
 --- !u!50 &795097108123080661
 Rigidbody2D:

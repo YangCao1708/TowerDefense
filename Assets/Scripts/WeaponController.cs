@@ -9,6 +9,8 @@ public class WeaponController : ItemController {
     private bool m_shouldShoot = false;
     private Animator m_ani;
     private List<MonsterController> m_mons;
+    private int m_rowIndex;
+    private int m_colIndex;
 
     private void Awake()
     {
@@ -16,7 +18,6 @@ public class WeaponController : ItemController {
         m_mons = new List<MonsterController>();
     }
 
-    // Update is called once per frame
     void Update () {
 		if (!m_isShooting && m_shouldShoot)
         {
@@ -43,6 +44,12 @@ public class WeaponController : ItemController {
         m_isShooting = false;
     }
 
+    public void SetIndex(int r, int c)
+    {
+        m_rowIndex = r;
+        m_colIndex = c;
+    }
+
     public void UpdateShootStatus(bool shouldShoot)
     {
         m_shouldShoot = shouldShoot;
@@ -56,7 +63,7 @@ public class WeaponController : ItemController {
             foreach (MonsterController mon in m_mons) {
                 mon.UpdateForward(true);
             }
-            //GameManager.Instance.RemoveWeapon(this);
+            GameManager.Instance.RemoveWeapon(m_rowIndex, m_colIndex);
             Destroy(this.gameObject);
             return;
         }
