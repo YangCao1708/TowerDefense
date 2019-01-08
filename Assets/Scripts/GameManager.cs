@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour {
             weapon.GetComponent<WeaponController>().SetIndex(rowNum, colNum);
             row[colNum] = weapon.GetComponent<WeaponController>();
             m_weaponDict[rowNum] = row;
+            Debug.Log(weapon.name + " " + rowNum + " " + colNum);
         }
     }
 
@@ -78,7 +79,6 @@ public class GameManager : MonoBehaviour {
         int randIdx = Random.Range(0, m_monsterPool.Count);
         GameObject monster = Instantiate<GameObject>(m_monsterPool[randIdx], MonsterParent);
         monster.transform.localPosition = pos;
-        //m_monsterList.Add(monster.GetComponent<MonsterController>());
     }
 
     IEnumerator TestCreateMonsters()
@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour {
         yield return new WaitForSeconds(2);
         float start_time = Time.time;
         float time_diff = 0;
-        while (time_diff < 20)
+        while (time_diff < 35)
         {
             CreateMonsters();
             yield return new WaitForSeconds(5);
@@ -94,19 +94,21 @@ public class GameManager : MonoBehaviour {
         }
         m_monsterPool.Add(BallPrefab);
         m_monsterPool.Add(PhonePrefab);
-        while (time_diff < 55)
+        while (time_diff < 65)
         {
             CreateMonsters();
             yield return new WaitForSeconds(4);
             time_diff = Time.time - start_time;
         }
         m_monsterPool.Add(ControllerPrefab);
-        while (time_diff < 85)
+        while (time_diff < 90)
         {
             CreateMonsters();
             yield return new WaitForSeconds(3);
             time_diff = Time.time - start_time;
         }
+
+        TriggerController.Trigger.Won();
     }
 
 
@@ -120,6 +122,7 @@ public class GameManager : MonoBehaviour {
         {
             if (row[i] != null)
             {
+                Debug.Log(rowIndex + " not null weapon!");
                 row[i].UpdateShootStatus(shouldShoot);
             }
         }
