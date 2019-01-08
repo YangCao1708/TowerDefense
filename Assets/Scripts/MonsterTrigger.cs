@@ -19,10 +19,17 @@ public class MonsterTrigger : MonoBehaviour {
                 GameManager.Instance.UpdateShootingStatus(Index, true);
             }
             m_count++;
+        } else if (collision.tag == "Weapon")
+        {
+            WeaponController weapon = collision.GetComponent<WeaponController>();
+            if (m_count > 0)
+            {
+                weapon.UpdateShootStatus(true);
+            }
         }
     }
 
-   public void OnMonsterDied()
+    public void OnMonsterDied()
     {
         m_count--;
         if (m_count == 0)

@@ -5,8 +5,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
     public static GameManager Instance;
-    public GameObject TestWeapon;
-    public GameObject TestMonster;
+    public GameObject BallPrefab;
+    public GameObject ControllerPrefab;
+    public GameObject FriesPrefab;
+    public GameObject PhonePrefab;
+    public GameObject PillowPrefab;
+
     public LocateHelper Helper;
     public Transform WeaponParent;
     public Transform MonsterParent;
@@ -14,7 +18,8 @@ public class GameManager : MonoBehaviour {
 
     private Dictionary<int, List<WeaponController>> m_weaponDict;
     private List<WeaponController> m_weaponList;
-    private List<MonsterController> m_monsterList;
+    //private List<MonsterController> m_monsterList;
+    private List<GameObject> m_monsterPool;
 
     private void Awake()
     {
@@ -25,13 +30,13 @@ public class GameManager : MonoBehaviour {
         Instance = this;
     }
 
-    // Use this for initialization
     void Start () {
         m_weaponDict = new Dictionary<int, List<WeaponController>>();
-        //m_weaponList = new List<WeaponController>();
-        m_monsterList = new List<MonsterController>();
+        //m_monsterList = new List<MonsterController>();
+        m_monsterPool = new List<GameObject>();
+        m_monsterPool.Add(FriesPrefab);
+        m_monsterPool.Add(PillowPrefab);
 
-        //StartCoroutine(TestCreateWeapon());
         StartCoroutine(TestCreateMonsters());
 	}
 
@@ -63,46 +68,53 @@ public class GameManager : MonoBehaviour {
             row[colNum] = weapon.GetComponent<WeaponController>();
             m_weaponDict[rowNum] = row;
         }
-
-        //m_weaponList.Add(weapon.GetComponent<WeaponController>());
     }
 
-    IEnumerator TestCreateWeapon()
-    {
-        yield return new WaitForSeconds(2);
-        CreateWeapon(TestWeapon, 0, 7);
-        CreateWeapon(TestWeapon, 1, 7);
-        CreateWeapon(TestWeapon, 2, 7);
-        CreateWeapon(TestWeapon, 3, 7);
-        CreateWeapon(TestWeapon, 4, 7);
-    }
 
-    // TODO
     void CreateMonsters()
     {
         int index = Random.Range(0, Constants.RowNum);
         Vector3 pos = Helper.GetMonsterPositionByIndex(index);
-        GameObject monster = Instantiate<GameObject>(TestMonster, MonsterParent);
+        int randIdx = Random.Range(0, m_monsterPool.Count);
+        GameObject monster = Instantiate<GameObject>(m_monsterPool[randIdx], MonsterParent);
         monster.transform.localPosition = pos;
-        m_monsterList.Add(monster.GetComponent<MonsterController>());
+        //m_monsterList.Add(monster.GetComponent<MonsterController>());
     }
 
     IEnumerator TestCreateMonsters()
     {
         yield return new WaitForSeconds(2);
-        while (true)
+        float start_time = Time.time;
+        float time_diff = 0;
+        while (time_diff < 20)
         {
             CreateMonsters();
             yield return new WaitForSeconds(5);
+            time_diff = Time.time - start_time;
+        }
+        m_monsterPool.Add(BallPrefab);
+        m_monsterPool.Add(PhonePrefab);
+        while (time_diff < 55)
+        {
+            CreateMonsters();
+            yield return new WaitForSeconds(4);
+            time_diff = Time.time - start_time;
+        }
+        m_monsterPool.Add(ControllerPrefab);
+        while (time_diff < 85)
+        {
+            CreateMonsters();
+            yield return new WaitForSeconds(3);
+            time_diff = Time.time - start_time;
         }
     }
 
-    // TODO
+
+
     public void UpdateShootingStatus(int rowIndex, bool shouldShoot)
     {
         if (!m_weaponDict.ContainsKey(rowIndex)) return;
 
-        Debug.Log("Got here! " + rowIndex + " " + shouldShoot);
         List<WeaponController> row = m_weaponDict[rowIndex];
         for (int i = 0; i < Constants.ColumnNum; i++)
         {
@@ -111,10 +123,6 @@ public class GameManager : MonoBehaviour {
                 row[i].UpdateShootStatus(shouldShoot);
             }
         }
-        //foreach(WeaponController weapon in m_weaponDict[rowIndex])
-        //{
-        //    weapon.UpdateShootStatus(shouldShoot);
-        //}
     }
 
     public void RemoveWeapon(int r, int c)

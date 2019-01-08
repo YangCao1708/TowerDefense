@@ -38,7 +38,6 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IDragHandler, 
         if (isRect)
         {
             bool success = BatteryController.Battery.DecreaseBattery(m_cost);
-            Debug.Log(success);
             if (!success)
             {
                 return;

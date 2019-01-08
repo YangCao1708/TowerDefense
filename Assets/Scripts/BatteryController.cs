@@ -7,7 +7,7 @@ public class BatteryController : MonoBehaviour
     public static BatteryController Battery;
     public Transform BatteryFilling;
 
-    private int m_battery = 3;
+    private int m_battery;
 
 
     private void Awake()
@@ -23,7 +23,7 @@ public class BatteryController : MonoBehaviour
     {
         m_battery = 3;
         UpdateBattery();
-        InvokeRepeating("IncreaseBattery", 5.0f, 5.0f);
+        InvokeRepeating("IncreaseBattery", 4.0f, 4.0f);
     }
 
     void Update()
@@ -47,7 +47,6 @@ public class BatteryController : MonoBehaviour
     public bool DecreaseBattery(int bat)
     {
         int newBat = m_battery - bat;
-        Debug.Log(newBat);
         if (newBat < 0)
         {
             return false;

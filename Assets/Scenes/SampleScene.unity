@@ -1592,6 +1592,63 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -110}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 0.5}
+--- !u!1 &1134943239
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1134943241}
+  - component: {fileID: 1134943240}
+  m_Layer: 0
+  m_Name: Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!61 &1134943240
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134943239}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -2.02, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.21, y: 3.89}
+  m_EdgeRadius: 0
+--- !u!4 &1134943241
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134943239}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1272720010
 GameObject:
   m_ObjectHideFlags: 0
@@ -2036,8 +2093,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3af7662132fecd74285f4d97b73c935c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TestWeapon: {fileID: 1222197375515918, guid: 12d7587005c70f14da322da38e0e20f8, type: 3}
-  TestMonster: {fileID: 1364434883314350, guid: 2c815a475ff918047a5d67bd7dafa4d6,
+  BallPrefab: {fileID: 1629219259866970, guid: b21d702b5a26e7e40a1fa08e906157aa, type: 3}
+  ControllerPrefab: {fileID: 1981703453158814, guid: c61d97bb3e97c7c4c97d8b1b60884d53,
+    type: 3}
+  FriesPrefab: {fileID: 1689745517119148, guid: 9f4554f02dcf4df4ea90c71d054bbe22,
+    type: 3}
+  PhonePrefab: {fileID: 1983988982249004, guid: 25102b1faf4d55c4888540a3c232c371,
+    type: 3}
+  PillowPrefab: {fileID: 1364434883314350, guid: 2c815a475ff918047a5d67bd7dafa4d6,
     type: 3}
   Helper: {fileID: 380882640}
   WeaponParent: {fileID: 544102149}

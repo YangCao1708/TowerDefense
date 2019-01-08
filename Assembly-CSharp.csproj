@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\LocateHelper.cs" />
     <Compile Include="Assets\Scripts\MonsterController.cs" />
     <Compile Include="Assets\Scripts\MonsterTrigger.cs" />
+    <Compile Include="Assets\Scripts\TriggerController.cs" />
     <Compile Include="Assets\Scripts\WeaponController.cs" />
     <Compile Include="Assets\Simple Health Bar\_Asteroids Example\Scripts\AsteroidController.cs" />
     <Compile Include="Assets\Simple Health Bar\_Asteroids Example\Scripts\GameManager.cs" />
